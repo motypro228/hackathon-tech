@@ -16,9 +16,12 @@
             min-height: 100vh;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #fff;
-            padding: 30px 50px;
+            padding: 20px;
             position: relative;
-            overflow: hidden;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         body::before,
@@ -50,26 +53,30 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             position: relative;
             z-index: 5;
             gap: 20px;
+            width: 100%;
+            max-width: 900px;
+            flex-wrap: wrap;
         }
 
         .task-title {
-            font-size: 26px;
+            font-size: 22px;
             font-weight: 700;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
             flex: 1;
+            min-width: 200px;
         }
 
         .btn-tasks {
-            padding: 12px 28px;
+            padding: 10px 24px;
             background: rgba(255, 255, 255, 0.15);
             color: #fff;
             text-decoration: none;
             border-radius: 50px;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 600;
             border: 1px solid rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(10px);
@@ -86,11 +93,13 @@
         /* Подсказка */
         .hint {
             text-align: center;
-            margin-bottom: 20px;
-            font-size: 15px;
-            opacity: 0.85;
+            margin-bottom: 15px;
+            font-size: 14px;
+            opacity: 0.9;
             position: relative;
             z-index: 5;
+            max-width: 900px;
+            width: 100%;
         }
 
         .hint strong {
@@ -102,13 +111,13 @@
             position: relative;
             width: 100%;
             max-width: 900px;
-            height: 550px;
+            height: 500px;
             margin: 0 auto;
             background: rgba(255, 255, 255, 0.06);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 24px;
             backdrop-filter: blur(10px);
-            overflow: hidden;
+            overflow: visible;
             z-index: 5;
         }
 
@@ -154,8 +163,8 @@
         }
 
         .object img {
-            width: 140px;
-            height: 140px;
+            width: 120px;
+            height: 120px;
             object-fit: contain;
             filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
             transition: filter 0.4s ease, transform 0.3s ease;
@@ -179,19 +188,19 @@
         }
 
         .label {
-            margin-top: 10px;
-            padding: 6px 16px;
+            margin-top: 8px;
+            padding: 5px 14px;
             background: rgba(0, 0, 0, 0.25);
             border-radius: 20px;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             letter-spacing: 0.5px;
         }
 
         /* Узлы */
         .node {
-            width: 22px;
-            height: 22px;
+            width: 20px;
+            height: 20px;
             background: rgba(255, 255, 255, 0.9);
             border: 3px solid #fff;
             border-radius: 50%;
@@ -250,14 +259,24 @@
             transform: translateX(-50%);
         }
 
-        /* Кнопки управления */
+        /* Кнопки управления и статус — всегда видны */
+        .controls-wrapper {
+            width: 100%;
+            max-width: 900px;
+            margin-top: 20px;
+            position: relative;
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
         .controls {
             display: flex;
             justify-content: center;
             gap: 15px;
-            margin-top: 25px;
-            position: relative;
-            z-index: 5;
+            flex-wrap: wrap;
         }
 
         .btn {
@@ -282,13 +301,11 @@
         /* Статус */
         .status {
             text-align: center;
-            margin-top: 20px;
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 600;
-            min-height: 28px;
-            position: relative;
-            z-index: 5;
+            min-height: 26px;
             transition: all 0.3s ease;
+            padding: 0 20px;
         }
 
         .status.success {
@@ -299,7 +316,7 @@
         /* Адаптивность */
         @media (max-width: 768px) {
             body {
-                padding: 20px;
+                padding: 15px;
             }
 
             .top-bar {
@@ -308,7 +325,7 @@
             }
 
             .task-title {
-                font-size: 20px;
+                font-size: 18px;
                 text-align: center;
             }
 
@@ -317,20 +334,40 @@
             }
 
             .workspace {
-                height: 500px;
+                height: 450px;
             }
 
             .object img {
-                width: 100px;
-                height: 100px;
+                width: 90px;
+                height: 90px;
             }
 
             .object.battery { left: 3%; }
             .object.lamp { right: 3%; }
 
             .node {
-                width: 18px;
-                height: 18px;
+                width: 16px;
+                height: 16px;
+            }
+
+            .hint {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .workspace {
+                height: 400px;
+            }
+
+            .object img {
+                width: 70px;
+                height: 70px;
+            }
+
+            .label {
+                font-size: 11px;
+                padding: 4px 10px;
             }
         }
     </style>
@@ -342,7 +379,7 @@
         <a href="tasks.html" class="btn-tasks">К заданиям</a>
     </div>
 
-    <p class="hint">💡 <strong>Кликайте по двум узлам</strong>, чтобы соединить их. Повторный клик по соединённым узлам — разъединит их.</p>
+    <p class="hint"> <strong>Кликайте по двум узлам</strong>, чтобы соединить их. Повторный клик — разъединит.</p>
 
     <!-- Рабочая область -->
     <div class="workspace" id="workspace">
@@ -389,18 +426,18 @@
         </div>
     </div>
 
-    <!-- Кнопки управления -->
-    <div class="controls">
-        <button class="btn" onclick="resetAll()">🔄 Сбросить всё</button>
+    <!-- Кнопки и статус — всегда видны -->
+    <div class="controls-wrapper">
+        <div class="controls">
+            <button class="btn" onclick="resetAll()"> Сбросить всё</button>
+        </div>
+        <div class="status" id="status"></div>
     </div>
-
-    <!-- Статус -->
-    <div class="status" id="status"></div>
 
     <script>
         // Состояние
         let selectedNode = null;
-        const connections = new Map(); // ключ: "id1-id2" (отсортированные), значение: {from, to, line}
+        const connections = new Map();
 
         // Путь к картинкам
         const LAMP_OFF = 'image/lampa.png';
@@ -422,21 +459,18 @@
         function handleNodeClick(node) {
             const id = node.dataset.id;
 
-            // Если этот узел уже выбран — снимаем выделение
             if (selectedNode === node) {
                 node.classList.remove('selected');
                 selectedNode = null;
                 return;
             }
 
-            // Если ничего не выбрано — выбираем этот узел
             if (!selectedNode) {
                 selectedNode = node;
                 node.classList.add('selected');
                 return;
             }
 
-            // Оба узла из одного объекта — нельзя соединять
             if (selectedNode.dataset.group === node.dataset.group) {
                 selectedNode.classList.remove('selected');
                 selectedNode = node;
@@ -444,23 +478,19 @@
                 return;
             }
 
-            // Создаём или удаляем соединение
             const id1 = selectedNode.dataset.id;
             const id2 = id;
             const key = [id1, id2].sort().join('|');
 
             if (connections.has(key)) {
-                // Разъединяем
                 removeConnection(key);
             } else {
-                // Соединяем
                 addConnection(selectedNode, node, key);
             }
 
             selectedNode.classList.remove('selected');
             selectedNode = null;
 
-            // Проверяем, собрана ли цепь
             checkCircuit();
         }
 
@@ -488,16 +518,13 @@
             conn.line.remove();
             connections.delete(key);
 
-            // Проверяем, остались ли соединения у узлов
             updateNodeStates();
             updateLines();
         }
 
         function updateNodeStates() {
-            // Сбрасываем все connected
             nodes.forEach(n => n.classList.remove('connected'));
 
-            // Помечаем узлы, у которых есть соединения
             connections.forEach(conn => {
                 conn.from.classList.add('connected');
                 conn.to.classList.add('connected');
@@ -524,7 +551,6 @@
         }
 
         function checkCircuit() {
-            // Правильная цепь: 4 объекта, 4 соединения, каждый объект имеет ровно 2 соединения
             const groups = ['battery', 'wire-top', 'lamp', 'wire-bottom'];
             
             if (connections.size !== 4) {
@@ -533,7 +559,6 @@
                 return;
             }
 
-            // Считаем степень каждого объекта (сколько у него соединений)
             const degree = {};
             groups.forEach(g => degree[g] = 0);
 
@@ -544,12 +569,11 @@
                 degree[g2]++;
             });
 
-            // Все должны иметь степень 2
             const allTwo = groups.every(g => degree[g] === 2);
 
             if (allTwo) {
                 lampOn();
-                updateStatus('🎉 Отлично! Цепь собрана — лампочка горит!', true);
+                updateStatus('Отлично! Цепь собрана — лампочка горит!', true);
             } else {
                 lampOff();
                 updateStatus('', false);
@@ -559,7 +583,6 @@
         function lampOn() {
             lampImg.src = LAMP_ON;
             document.querySelector('.object.lamp').classList.add('lit');
-            // Подсвечиваем все соединения
             connections.forEach(conn => conn.line.classList.add('active'));
         }
 
@@ -575,7 +598,6 @@
         }
 
         function resetAll() {
-            // Удаляем все соединения
             connections.forEach(conn => conn.line.remove());
             connections.clear();
             updateNodeStates();
@@ -589,11 +611,9 @@
             updateStatus('', false);
         }
 
-        // Обновляем линии при изменении размера окна
         window.addEventListener('resize', updateLines);
         window.addEventListener('scroll', updateLines);
 
-        // Первоначальная отрисовка
         setTimeout(updateLines, 100);
     </script>
 </body>
