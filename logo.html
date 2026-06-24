@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О хакатоне</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            position: relative;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Декоративные круги на фоне */
+        body::before,
+        body::after {
+            content: '';
+            position: fixed;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            pointer-events: none;
+        }
+
+        body::before {
+            width: 400px;
+            height: 400px;
+            top: -150px;
+            left: -150px;
+        }
+
+        body::after {
+            width: 500px;
+            height: 500px;
+            bottom: -200px;
+            right: -200px;
+        }
+
+        /* Шапка — как на главной */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 50px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo img {
+            height: 60px;
+            width: auto;
+            display: block;
+            border-radius: 8px;
+        }
+
+        .logo-placeholder {
+            height: 60px;
+            padding: 0 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px dashed rgba(255, 255, 255, 0.4);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .btn-login {
+            padding: 12px 32px;
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .btn-login:hover {
+            background: #fff;
+            color: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Название хакатона по центру */
+        .page-title {
+            text-align: center;
+            padding: 40px 20px 30px;
+            position: relative;
+            z-index: 5;
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .page-title h1 {
+            font-size: 64px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+            margin-bottom: 10px;
+        }
+
+        .page-title .subtitle {
+            font-size: 20px;
+            opacity: 0.85;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Широкий блок с информацией */
+        .info-section {
+            width: 100%;
+            padding: 40px 50px 80px;
+            position: relative;
+            z-index: 5;
+            animation: fadeIn 0.8s ease 0.2s backwards;
+            flex: 1;
+        }
+
+        .info-card {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 24px;
+            padding: 60px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        .info-card .goal-label {
+            display: inline-block;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            opacity: 0.75;
+            margin-bottom: 20px;
+            padding: 6px 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+        }
+
+        .info-card .goal-text {
+            font-size: 36px;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 40px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .info-card .divider {
+            width: 80px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 2px;
+            margin-bottom: 40px;
+        }
+
+        .info-card .description {
+            font-size: 18px;
+            line-height: 1.7;
+            opacity: 0.9;
+            max-width: 1000px;
+        }
+
+        .info-card .description p {
+            margin-bottom: 18px;
+        }
+
+        /* Подвал с соцсетями */
+        .footer {
+            position: relative;
+            z-index: 5;
+            padding: 40px 50px 50px;
+            text-align: center;
+            animation: fadeIn 0.8s ease 0.4s backwards;
+        }
+
+        .footer-title {
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            opacity: 0.7;
+            margin-bottom: 25px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 28px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 50px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .social-link svg {
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
+            fill: #fff;
+            transition: transform 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: #fff;
+            color: #764ba2;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+        }
+
+        .social-link:hover svg {
+            fill: #764ba2;
+            transform: scale(1.1);
+        }
+
+        /* Специальный цвет для Telegram */
+        .social-link.tg:hover {
+            background: #2AABEE;
+            color: #fff;
+            border-color: #2AABEE;
+        }
+
+        .social-link.tg:hover svg {
+            fill: #fff;
+        }
+
+        /* Специальный цвет для ВК */
+        .social-link.vk:hover {
+            background: #0077FF;
+            color: #fff;
+            border-color: #0077FF;
+        }
+
+        .social-link.vk:hover svg {
+            fill: #fff;
+        }
+
+        .copyright {
+            margin-top: 30px;
+            font-size: 13px;
+            opacity: 0.6;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            header {
+                padding: 20px;
+            }
+
+            .logo img,
+            .logo-placeholder {
+                height: 45px;
+            }
+
+            .btn-login {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            .page-title h1 {
+                font-size: 40px;
+            }
+
+            .page-title .subtitle {
+                font-size: 16px;
+            }
+
+            .info-section {
+                padding: 20px 20px 50px;
+            }
+
+            .info-card {
+                padding: 35px 25px;
+            }
+
+            .info-card .goal-text {
+                font-size: 24px;
+            }
+
+            .info-card .description {
+                font-size: 16px;
+            }
+
+            .footer {
+                padding: 30px 20px 40px;
+            }
+
+            .social-links {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+
+            .social-link {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка с логотипом и кнопкой "Войти" -->
+    <header>
+        <a href="index.html" class="logo">
+            <img src="image/logo.png" alt="Логотип хакатона">
+        </a>
+        <a href="login.html" class="btn-login">Войти</a>
+    </header>
+
+    <!-- Название хакатона по центру -->
+    <div class="page-title">
+        <h1>Образовательный хакатон</h1>
+        <p class="subtitle">Узнайте больше о нашем мероприятии</p>
+    </div>
+
+    <!-- Широкий блок с информацией -->
+    <section class="info-section">
+        <div class="info-card">
+            <span class="goal-label">Наша цель</span>
+            <h2 class="goal-text">
+                Цель нашего хакатона — заинтересовать детей в устройстве технологий
+            </h2>
+            <div class="divider"></div>
+            <div class="description">
+                <p>
+                    Мы верим, что каждый ребёнок может стать создателем будущего. Наш хакатон — это возможность погрузиться в мир технологий, понять, как устроены привычные вещи, и попробовать создать что-то своё.
+                </p>
+                <p>
+                    Через интерактивные задания, простые эксперименты и увлекательные задачи мы помогаем участникам открыть для себя программирование, электронику, алгоритмы и многие другие области. Здесь нет сложных терминов без объяснений — только понятный язык и реальные примеры.
+                </p>
+                <p>
+                    Присоединяйтесь, чтобы узнать, как устроен мир вокруг нас, и стать частью команды, меняющей будущее!
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Подвал с соцсетями -->
+    <footer class="footer">
+        <div class="footer-title">Свяжитесь с нами</div>
+        <div class="social-links">
+            <!-- Личный ВКонтакте -->
+            <a href="https://vk.com/m_o_t_y" target="_blank" class="social-link vk">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15.07 2H8.93C3.33 2 2 3.33 2 8.93v6.14C2 20.67 3.33 22 8.93 22h6.14c5.6 0 6.93-1.33 6.93-6.93V8.93C22 3.33 20.67 2 15.07 2zm3.08 14.27h-1.45c-.55 0-.72-.44-1.71-1.44-.86-.83-1.23-.94-1.44-.94-.3 0-.38.08-.38.49v1.31c0 .35-.11.56-1.03.56-1.52 0-3.2-.92-4.39-2.63-1.78-2.5-2.27-4.38-2.27-4.77 0-.21.08-.4.49-.4h1.45c.37 0 .51.17.65.56.72 2.08 1.92 3.9 2.41 3.9.18 0 .27-.08.27-.55V10.1c-.06-.99-.58-1.08-.58-1.43 0-.17.14-.34.37-.34h2.29c.31 0 .42.17.42.53v2.88c0 .31.14.42.22.42.18 0 .33-.11.66-.44 1.02-1.14 1.75-2.9 1.75-2.9.09-.21.27-.4.64-.4h1.45c.44 0 .53.22.44.53-.18.83-1.92 3.43-1.92 3.43-.15.24-.21.35 0 .62.15.21.64.64.97 1.03.6.69 1.06 1.27 1.18 1.67.14.39-.07.59-.47.59z"/>
+                </svg>
+                <span>Моя страница ВК</span>
+            </a>
+
+            <!-- Личный Telegram -->
+            <a href="https://t.me/motyPRO228" target="_blank" class="social-link tg">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                </svg>
+                <span>Telegram</span>
+            </a>
+
+            <!-- Группа ВКонтакте -->
+            <a href="https://vk.com/club239766159" target="_blank" class="social-link vk">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15.07 2H8.93C3.33 2 2 3.33 2 8.93v6.14C2 20.67 3.33 22 8.93 22h6.14c5.6 0 6.93-1.33 6.93-6.93V8.93C22 3.33 20.67 2 15.07 2zm3.08 14.27h-1.45c-.55 0-.72-.44-1.71-1.44-.86-.83-1.23-.94-1.44-.94-.3 0-.38.08-.38.49v1.31c0 .35-.11.56-1.03.56-1.52 0-3.2-.92-4.39-2.63-1.78-2.5-2.27-4.38-2.27-4.77 0-.21.08-.4.49-.4h1.45c.37 0 .51.17.65.56.72 2.08 1.92 3.9 2.41 3.9.18 0 .27-.08.27-.55V10.1c-.06-.99-.58-1.08-.58-1.43 0-.17.14-.34.37-.34h2.29c.31 0 .42.17.42.53v2.88c0 .31.14.42.22.42.18 0 .33-.11.66-.44 1.02-1.14 1.75-2.9 1.75-2.9.09-.21.27-.4.64-.4h1.45c.44 0 .53.22.44.53-.18.83-1.92 3.43-1.92 3.43-.15.24-.21.35 0 .62.15.21.64.64.97 1.03.6.69 1.06 1.27 1.18 1.67.14.39-.07.59-.47.59z"/>
+                </svg>
+                <span>Группа ВК</span>
+            </a>
+        </div>
+        <div class="copyright">© 2026 Образовательный хакатон</div>
+    </footer>
+</body>
+</html>

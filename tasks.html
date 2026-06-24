@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задания</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            padding: 30px 50px 60px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before,
+        body::after {
+            content: '';
+            position: fixed;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::before {
+            width: 400px;
+            height: 400px;
+            top: -150px;
+            left: -150px;
+        }
+
+        body::after {
+            width: 500px;
+            height: 500px;
+            bottom: -200px;
+            right: -200px;
+        }
+
+        /* Шапка */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 15px;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #fff;
+            color: #764ba2;
+            transform: translateX(-3px);
+        }
+
+        .progress {
+            padding: 10px 22px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50px;
+            font-size: 15px;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .progress span {
+            color: #ffd700;
+        }
+
+        /* Заголовок */
+        .page-title {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .page-title h1 {
+            font-size: 44px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .page-title p {
+            font-size: 18px;
+            opacity: 0.85;
+        }
+
+        /* Сетка заданий */
+        .tasks-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 5;
+        }
+
+        .task-card {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 20px;
+            padding: 25px;
+            text-decoration: none;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease backwards;
+        }
+
+        .task-card:nth-child(1) { animation-delay: 0.1s; }
+        .task-card:nth-child(2) { animation-delay: 0.2s; }
+        .task-card:nth-child(3) { animation-delay: 0.3s; }
+        .task-card:nth-child(4) { animation-delay: 0.4s; }
+        .task-card:nth-child(5) { animation-delay: 0.5s; }
+        .task-card:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .task-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .task-card:hover::before {
+            left: 100%;
+        }
+
+        .task-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .task-number {
+            font-size: 14px;
+            font-weight: 700;
+            padding: 6px 14px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            align-self: flex-start;
+        }
+
+        .task-image {
+            width: 100%;
+            height: 180px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .task-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .task-image-placeholder {
+            font-size: 14px;
+            opacity: 0.5;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .task-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .task-footer {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            margin-top: auto;
+        }
+
+        .task-start {
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: gap 0.3s ease;
+        }
+
+        .task-card:hover .task-start {
+            gap: 12px;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 992px) {
+            .tasks-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 20px;
+            }
+
+            .tasks-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .page-title h1 {
+                font-size: 32px;
+            }
+
+            .page-title p {
+                font-size: 15px;
+            }
+
+            .task-title {
+                font-size: 18px;
+            }
+
+            .top-bar {
+                margin-bottom: 25px;
+            }
+
+            .task-image {
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <div class="top-bar">
+        <a href="index.html" class="back-btn">← Назад</a>
+        <div class="progress">Пройдено: <span>0 / 6</span></div>
+    </div>
+
+    <!-- Заголовок -->
+    <div class="page-title">
+        <h1>Задания хакатона</h1>
+        <p>Выберите задание и узнайте, как устроены технологии</p>
+    </div>
+
+    <!-- Сетка из 6 заданий -->
+    <div class="tasks-grid">
+        <!-- Задание 1 -->
+        <a href="task1.html" class="task-card">
+            <span class="task-number">ЗАДАНИЕ 1</span>
+            <div class="task-image">
+                 <img src="image/ebychaa_lampochka_blyat.png" alt="Задание 1">
+               <!-- <div class="task-image-placeholder">Вставьте картинку<br>task1.png</div> -->
+            </div>
+            <h3 class="task-title">Задание 1</h3>
+            <div class="task-footer">
+                <span class="task-start">Начать →</span>
+            </div>
+        </a>
+
+        <!-- Задание 2 -->
+        <a href="task2.html" class="task-card">
+            <span class="task-number">ЗАДАНИЕ 2</span>
+            <div class="task-image">
+                <!-- <img src="image/task2.png" alt="Задание 2"> -->
+                <div class="task-image-placeholder">Вставьте картинку<br>task2.png</div>
+            </div>
+            <h3 class="task-title">Задание 2</h3>
+            <div class="task-footer">
+                <span class="task-start">Начать →</span>
+            </div>
+        </a>
+
+        <!-- Задание 3 -->
+        <a href="task3.html" class="task-card">
+            <span class="task-number">ЗАДАНИЕ 3</span>
+            <div class="task-image">
+                <!-- <img src="image/task3.png" alt="Задание 3"> -->
+                <div class="task-image-placeholder">Вставьте картинку<br>task3.png</div>
+            </div>
+            <h3 class="task-title">Задание 3</h3>
+            <div class="task-footer">
+                <span class="task-start">Начать →</span>
+            </div>
+        </a>
+
+        <!-- Задание 4 -->
+        <a href="task4.html" class="task-card">
+            <span class="task-number">ЗАДАНИЕ 4</span>
+            <div class="task-image">
+                <!-- <img src="image/task4.png" alt="Задание 4"> -->
+                <div class="task-image-placeholder">Вставьте картинку<br>task4.png</div>
+            </div>
+            <h3 class="task-title">Задание 4</h3>
+            <div class="task-footer">
+                <span class="task-start">Начать →</span>
+            </div>
+        </a>
+
+        <!-- Задание 5 -->
+        <a href="task5.html" class="task-card">
+            <span class="task-number">ЗАДАНИЕ 5</span>
+            <div class="task-image">
+                <!-- <img src="image/task5.png" alt="Задание 5"> -->
+                <div class="task-image-placeholder">Вставьте картинку<br>task5.png</div>
+            </div>
+            <h3 class="task-title">Задание 5</h3>
+            <div class="task-footer">
+                <span class="task-start">Начать →</span>
+            </div>
+        </a>
+
+        <!-- Задание 6 -->
+        <a href="task6.html" class="task-card">
+            <span class="task-number">ЗАДАНИЕ 6</span>
+            <div class="task-image">
+                <!-- <img src="image/task6.png" alt="Задание 6"> -->
+                <div class="task-image-placeholder">Вставьте картинку<br>task6.png</div>
+            </div>
+            <h3 class="task-title">Задание 6</h3>
+            <div class="task-footer">
+                <span class="task-start">Начать →</span>
+            </div>
+        </a>
+    </div>
+</body>
+</html>
