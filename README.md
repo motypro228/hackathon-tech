@@ -1,0 +1,1 @@
+# Hakaton_blize_k_technologiam
